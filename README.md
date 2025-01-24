@@ -11,7 +11,8 @@ Extract Transform Load data from a landing area to a consumer area
 * N/A
 
 ### Installing
-
+* Git clone the project
+    * git clone https://github.com/FredGH/etl.git
 * Create the Python Env
     * rm -rf venv/
     * In Visual Studio Vode -> Ctrl+Shift+P -> Select Interpreter ->  Python 3.11.x
@@ -19,21 +20,21 @@ Extract Transform Load data from a landing area to a consumer area
     * source ./venv/bin/activate
     * In Visual Studio Vode -> Ctrl+Shift+P -> Select Interpreter ->  (venv) Python 3.11.x
     * [optional] check Python3 version -> python3 -> should show Python 3.11.x
+
 * Install Requirements:
     * python3.11 -m pip install --upgrade pip
-* [optional] Install dbt
-    * find pip config: pip config list -v
-    * nano /Library/Frameworks/Python.framework/Versions/3.11/pip.conf
-    * paste: 
-        [global]
-        trusted-host = pypi.python.org
-    * pip3 install dbt
-    error: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1006)>
-    pip3 install pip-system-certs
+    * mkdir $HOME/.dbt
 * Build Package:    
     * pip3.11 install -U pip setuptools
     * python3.11 setup.py sdist bdist_wheel
     * pip3.11 install -e .
+
+    * create the dbt_pject file + profiles.yml and then try the dbt_script again...
+    then follow that
+    https://github.com/fal-ai/fal_dbt_examples
+    then follow that:
+    https://github.com/jmbrooks/dbt-project-template
+
     * [optional] pip install -Iv urllib3==1.26.15
 * Tag New Release & Push:
     * git tag 0.0.x -m "Release details"
