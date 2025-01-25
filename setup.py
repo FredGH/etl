@@ -1,20 +1,20 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
-with open('requirements.txt') as f:
+with open("requirements.txt") as f:
     requirements = f.read().splitlines()
 
 setup(
     name="etl",
     version="0.0.1",
     include_package_data=True,
-    python_requires='>=3.11',
+    python_requires=">=3.11",
     packages=find_packages(),
-    setup_requires=['setuptools-git-versioning'],
+    setup_requires=["setuptools-git-versioning"],
     install_requires=requirements,
     author="Frederic Marechal",
     author_email="freddy.marechal@gmail.com",
     description="A short description of your package",
-    long_description=open('README.md').read(),
+    long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     classifiers=[
         "Programming Language :: Python :: 3.11",
@@ -22,6 +22,6 @@ setup(
         "Operating System :: OS Independent",
     ],
     version_config={
-       "dirty_template": "{tag}",
-    }
+        "dirty_template": "{tag}",
+    },
 )

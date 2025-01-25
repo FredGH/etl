@@ -1,0 +1,14 @@
+packages:
+  # Utilities
+  - package: fishtown-analytics/dbt_utils
+    version: 0.6.2
+  - package: fishtown-analytics/audit_helper
+    version: 0.3.0
+  - package: fishtown-analytics/codegen
+    version: 0.3.2
+  - package: brooklyn-data/dbt_artifacts
+    version: 2.3.0
+  - package: calogica/dbt_expectations
+    version: 0.10.4
+  - package: calogica/dbt_date
+    version: 0.10.1

@@ -1,14 +1,27 @@
+
+then follow that
+https://github.com/fal-ai/fal_dbt_examples
+then follow that:
+https://github.com/jmbrooks/dbt-project-template
+
+
 # ETL
 
 ## Description
 
-Extract Transform Load data from a landing area to a consumer area
+Extract Transform Load data from a landing area to a consumer area.
+
+## Structure of the project
+
+** 1) Staging
+** 2) Transformation
+
+## Testing
 
 ## Getting Started
 
-### Dependencies
-
-* N/A
+### Profiles.yml
+A profiles.yml file needs to be created and populated accordingly.
 
 ### Installing
 * Git clone the project
@@ -20,22 +33,17 @@ Extract Transform Load data from a landing area to a consumer area
     * source ./venv/bin/activate
     * In Visual Studio Vode -> Ctrl+Shift+P -> Select Interpreter ->  (venv) Python 3.11.x
     * [optional] check Python3 version -> python3 -> should show Python 3.11.x
-
 * Install Requirements:
     * python3.11 -m pip install --upgrade pip
-    * mkdir $HOME/.dbt
+    * [optional] mkdir $HOME/.dbt
+    * [optinal] cp profiles.yml $HOME/.dbt/
 * Build Package:    
     * pip3.11 install -U pip setuptools
     * python3.11 setup.py sdist bdist_wheel
     * pip3.11 install -e .
-
-    * create the dbt_pject file + profiles.yml and then try the dbt_script again...
-    then follow that
-    https://github.com/fal-ai/fal_dbt_examples
-    then follow that:
-    https://github.com/jmbrooks/dbt-project-template
-
     * [optional] pip install -Iv urllib3==1.26.15
+* Init dbt
+    *  python3 ./scripts/dbt_init.py  
 * Tag New Release & Push:
     * git tag 0.0.x -m "Release details"
     * git push origin 0.0.x
@@ -67,11 +75,11 @@ Extract Transform Load data from a landing area to a consumer area
 
 ### Executing program
 
-* N/A
+* python3 ./scripts/dbt_run.py
 
 ## Help
 
-* N/A
+* Please contact the author
 
 ## Authors
 
