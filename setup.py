@@ -13,7 +13,7 @@ setup(
     install_requires=requirements,
     author="Frederic Marechal",
     author_email="freddy.marechal@gmail.com",
-    description="A short description of your package",
+    description="This is the Extract Transform Load Module",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     classifiers=[
