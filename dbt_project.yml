@@ -1,13 +1,16 @@
-name: etl
-version: 0.0.1
 
-require-dbt-version: ">=0.18.0"
-config-version: 2
+# Name your project! Project names should contain only lowercase characters
+# and underscores. A good package name should reflect your organization's
+# name or the intended use of these models
+name: 'etl'
+version: '1.0.0'
 
-# Configure database connection profile for dbt to use
+# This setting configures which "profile" dbt uses for this project.
 profile: 'etl'
 
-# Set paths for dbt objects
+# These configurations specify where dbt should look for different types of files.
+# The `model-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
 analysis-paths: ["analysis"]
 seed-paths: ["seeds"]
 macro-paths: ["macros"]
@@ -16,11 +19,13 @@ snapshot-paths: ["snapshots"]
 test-paths: ["tests"]
 
 log-path: "logs"
-#modules-path: "dbt_modules"
+
+# directories to be removed by `dbt clean`
 target-path: "target"
 clean-targets:
     - "dbt_modules"
     - "target"
+    - "dbt_packages"
 
 # Set query behavior: prepend comments and quoting
 query-comment: "{{ query_comment(node) }}"
@@ -29,20 +34,20 @@ quoting:
   schema: false
   identifier: false
 
-
-# DBT MODELS
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
 models:
     etl:
         +enabled: true
-        +materialized: view
+        +materialized: table
         +persist_docs:
             relation: true
             columns: true
         
         staging:
             +enabled: true
-            +schema: intermediate
-        
+            +materialized: table
+                    
         marts:
             +enabled: true
             +materialized: table
@@ -51,17 +56,16 @@ models:
             marketing:
                 +schema: marketing
 
-        dbt_artifadts:
+        dbt_artifacts:
             schema:'ARTIFACTS'
 
 # Project variables
 vars:
     etl:
-        dbt_project_created_date: '2020-09-21'  # <-- Set as date when dbt project first created
-        analysis_start_date: '2016-01-01'  # <-- Earliest time when organization started tracking data
+        dbt_project_created_date: '2025-01-01'  # <-- Set as date when dbt project first created
+        analysis_start_date: '1970-01-01'  # <-- Earliest time when organization started tracking data
         analysis_end_date: dbt_utils.current_timestamp()
-        source_database: lake  # <-- Set as name of the raw source database where data is ingested
-
+        source_database: landing  # <-- Set as name of the raw source database where data is ingested
 
 # Data seeds
 seeds:
@@ -72,10 +76,10 @@ seeds:
       +enabled: true
 
 # Tests
-data_tests:
-    +severity:warn
-    +store_failures:true
-    +schema:'ARTIFACTS'
+#data_tests:
+    #+severity:warn
+    #+store_failures:true
+    #+schema:'ARTIFACTS'
 
 on-run-end:
-    -"{{dbt_artifacts.upload_results(results)}}"
+    - "{{dbt_artifacts.upload_results(results)}}"

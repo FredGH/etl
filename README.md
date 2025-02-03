@@ -3,7 +3,8 @@ then follow that
 https://github.com/fal-ai/fal_dbt_examples
 then follow that:
 https://github.com/jmbrooks/dbt-project-template
-
+dbt and postgres
+https://medium.com/israeli-tech-radar/first-steps-with-dbt-over-postgres-db-f6b350bf4526
 
 # ETL
 
@@ -43,6 +44,7 @@ A profiles.yml file needs to be created and populated accordingly.
     * pip3.11 install -e .
     * [optional] pip install -Iv urllib3==1.26.15
 * Init dbt
+    *  rm -rf dbt_packages
     *  python3 ./scripts/dbt_init.py  
 * Tag New Release & Push:
     * git tag 0.0.x -m "Release details"

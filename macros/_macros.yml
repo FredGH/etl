@@ -1,5 +1,4 @@
 version: 2
-
 macros:
   - name: generate_schema_name
     description: "Environment management macro to replace the default 'get_custom_schema' behaviour, which will ensure schemas in prod match schema properties exactly, and are appended in all other environments"

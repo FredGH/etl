@@ -1,7 +1,10 @@
 # Dbt
 dbt_modules/
+dbt_packages/
+package-lock.yml
 target/
 logs/
+
 
 keyfile.json
 profiles.yml

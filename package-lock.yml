@@ -1,14 +1,14 @@
 packages:
-  - package: fishtown-analytics/dbt_utils
-    version: 0.6.2
-  - package: fishtown-analytics/audit_helper
-    version: 0.3.0
-  - package: fishtown-analytics/codegen
-    version: 0.3.2
+  - package: dbt-labs/dbt_utils
+    version: 1.3.0
+  - package: dbt-labs/audit_helper
+    version: 0.12.1
+  - package: dbt-labs/codegen
+    version: 0.13.1
   - package: brooklyn-data/dbt_artifacts
     version: 2.3.0
   - package: calogica/dbt_expectations
     version: 0.10.4
   - package: calogica/dbt_date
     version: 0.10.1
-sha1_hash: 73247602ac5a6c67a9ec943c1edb7937f56efcb6
+sha1_hash: 4ec1b85539c64a1f19314aa5238ad557e81fcb5d
