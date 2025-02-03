@@ -4,10 +4,9 @@ dbt_packages/
 package-lock.yml
 target/
 logs/
-
+profiles.yml
 
 keyfile.json
-profiles.yml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

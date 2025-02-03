@@ -72,8 +72,8 @@ seeds:
     +quote_columns: false
     +schema: intermediate
     
-    etl:
-      +enabled: true
+    #etl:
+    #  +enabled: true
 
 # Tests
 #data_tests:
