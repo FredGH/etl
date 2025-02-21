@@ -1,0 +1,11 @@
+version: 2
+models:
+   - name: dim_date
+     description: the date dimension
+     columns:
+      - name: date
+        description: the date
+        tests:
+          - not_null
+          - unique
+            

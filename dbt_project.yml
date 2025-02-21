@@ -56,8 +56,8 @@ models:
             marketing:
                 +schema: marketing
 
-        dbt_artifacts:
-            schema:'ARTIFACTS'
+    dbt_artifacts:
+        schema:'ARTIFACTS'
 
 # Project variables
 vars:
@@ -65,21 +65,21 @@ vars:
         dbt_project_created_date: '2025-01-01'  # <-- Set as date when dbt project first created
         analysis_start_date: '1970-01-01'  # <-- Earliest time when organization started tracking data
         analysis_end_date: dbt_utils.current_timestamp()
-        source_database: landing  # <-- Set as name of the raw source database where data is ingested
+        source_database: staging  # <-- Set as name of the raw source database where data is ingested
 
 # Data seeds
 seeds:
     +quote_columns: false
     +schema: intermediate
     
-    #etl:
-    #  +enabled: true
+    etl:
+      +enabled: true
 
 # Tests
-#data_tests:
-    #+severity:warn
-    #+store_failures:true
-    #+schema:'ARTIFACTS'
+data_tests:
+    +severity: warn
+    +store_failures: true
+    +schema: 'ARTIFACTS'
 
 on-run-end:
     - "{{dbt_artifacts.upload_results(results)}}"

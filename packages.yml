@@ -12,3 +12,5 @@ packages:
     version: 0.10.4
   - package: calogica/dbt_date
     version: 0.10.1
+#  - package: fal-ai/feature_store
+#    version: 0.1.2

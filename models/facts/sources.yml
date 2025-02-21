@@ -2,11 +2,11 @@ version: 2
 sources:
   - name: financial_markets_db
     database: financial_markets
-    schema: landing
+    schema: staging
     quoting:
       database: false
       schema: false
       identifier: false
     loader: stitch
     tables:
-      - name: analyst_price_targets
+      - name: stock_historical_data

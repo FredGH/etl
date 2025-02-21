@@ -2,7 +2,7 @@
 # ETL
 
 ## Description
-Extract Transform Load data from a landing area to a consumer area.
+Extract Transform Load data from a staging area to a consumer area.
 
 ## Structure of the project
 ** 1) Staging
@@ -32,8 +32,13 @@ A profiles.yml file needs to be created and populated accordingly.
     * pip3.11 install -e .
     * [optional] pip install -Iv urllib3==1.26.15
 * Init dbt
-    *  rm -rf dbt_packages
-    *  python3 ./scripts/dbt_init.py  
+    *  [optional]  rm -rf dbt_packages
+    *  python3 ./scripts/dbt_init.py     
+    * dbt build [model_name]
+* Run fal   
+    * fal run ./fal_scripts/test.py
+    
+
 
 ### Unit Tests Run
 * Run unit tests
