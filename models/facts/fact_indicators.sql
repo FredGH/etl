@@ -2,17 +2,17 @@
     config(materialized='table') 
 }}
 
-WITH stock_historical_data AS (
-
-	SELECT MD5(CONCAT(date)) AS date_key,
-	FROM { source('financial_markets_db', 'stock_historical_data') }
-	GROUP BY date
+WITH dim_date AS (
+	SELECT date_key,
+		   date
+	FROM {{ ref('dim_date') }}
+	GROUP BY date_key, 
+			 date
 ),
 fact_indicators AS (
-	SELECT  MD5(CONCAT(name, date)) AS indicator_key,
+	SELECT  MD5(CONCAT(name, date_key)) AS indicator_key,
 			date_key, 
 			name AS ticker,
-			date,
 			open, 
 			high,
 			low,
@@ -20,8 +20,8 @@ fact_indicators AS (
 			volume,
 			dividends,
 			stock_splits
-	FROM {{ source('financial_markets_db', 'stock_historical_data') }} AS stock_historical_data
-	LEFT JOIN stock_historical_data AS shd ON fact.date = shd.date   
+	FROM {{ source('financial_markets_db', 'stock_historical_data') }} AS shd
+	LEFT JOIN dim_date AS dd ON dd.date = shd.date   
 )
 SELECT indicator_key,
 		date_key, 
@@ -33,3 +33,4 @@ SELECT indicator_key,
 		volume,
 		dividends,
 		stock_splits
+FROM fact_indicators

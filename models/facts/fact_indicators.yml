@@ -1,0 +1,34 @@
+version: 2
+models:
+   - name: fact_indicators
+     description: the date dimension
+     columns:
+      - name: indicator_key
+        description: the surrogate key
+        tests:
+          - not_null
+          - unique
+      - name: date_key
+        description: the date key
+        tests:
+          - not_null
+          - unique
+      - name: ticker
+        description: the asset stock market ticker
+        tests:
+          - not_null
+          - unique
+      - name: open
+        description: the daily open price
+      - name: high
+        description: the daily highest price
+      - name: low
+        description: the daily highelowestst price
+      - name: close
+        description: the daily close price
+      - name: volume
+        description: the daily volume (i.e. quantity exchanged on the stock  market)      
+      - name: dividends
+        description: the amount of dividends paid on the day
+      - name: stock_splits
+        description: the stock splits on the day, it means that a company like Yahoo is dividing its existing shares into multiple new shares, effectively lowering the price per share without changing the overall market value of the company.
