@@ -1,4 +1,0 @@
-version: 2
-models:
-   - name: my_slq
-     description: just a quick test
