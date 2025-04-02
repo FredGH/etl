@@ -11,7 +11,8 @@ WITH dim_date AS (
 ),
 fact_indicators AS (
 	SELECT  MD5(CONCAT(name, date_key)) AS indicator_key,
-			date_key, 
+			date_key,
+			dd.date, --degenerated attribute 
 			name AS ticker,
 			open, 
 			high,
@@ -24,7 +25,8 @@ fact_indicators AS (
 	LEFT JOIN dim_date AS dd ON dd.date = shd.date   
 )
 SELECT indicator_key,
-		date_key, 
+		date_key,
+		date, 
 		ticker,
 		open, 
 		high,
@@ -32,5 +34,9 @@ SELECT indicator_key,
 		close,
 		volume,
 		dividends,
-		stock_splits
+		stock_splits,
+		-1.0 AS acc_dist_line_adl,
+		-1.0 AS return_log,
+		-1.0 AS ci_return_lower, 
+    	-1.0 AS ci_return_upper 
 FROM fact_indicators
