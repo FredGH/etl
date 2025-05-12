@@ -47,7 +47,7 @@ models:
         staging:
             +enabled: true
             +materialized: table
-                    
+
         marts:
             +enabled: true
             +materialized: table

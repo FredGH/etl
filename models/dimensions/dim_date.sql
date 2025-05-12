@@ -2,6 +2,17 @@
     config(materialized='table') 
 }}
 
+WITH  historical_data_union AS (
+	{% set relations = [
+		  source('landing_stock_src','historical_data')
+		, source('landing_index_src','historical_data')
+		, source('landing_currency_src','historical_data')
+		, source('landing_commodity_src','historical_data')
+		, source('landing_bond_src','historical_data')
+	] %}
+	{{ dbt_utils.union_relations(relations=relations) }}
+)
+
 SELECT MD5(CAST(date AS VARCHAR)) AS date_key,
 	   date, 
 	   CAST(date AS VARCHAR) AS date_as_str,
@@ -13,5 +24,6 @@ SELECT MD5(CAST(date AS VARCHAR)) AS date_key,
 	   CONCAT(CONCAT('Q-', TO_CHAR(date, 'Q')),'-',TO_CHAR(date, 'YYYY')) AS  calendar_quarter_year,
 	   0 AS holiday_indicator,
 	   'dummy_region' AS holiday_region
-FROM {{ source('financial_markets_db', 'stock_historical_data') }}
+--FROM {{ source('landing_stock_src','historical_data') }}
+FROM historical_data_union
 GROUP BY date

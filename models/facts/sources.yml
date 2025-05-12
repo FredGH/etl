@@ -2,11 +2,107 @@ version: 2
 sources:
   - name: financial_markets_db
     database: financial_markets
-    schema: staging
+    schema: landing
     quoting:
       database: false
       schema: false
       identifier: false
     loader: stitch
     tables:
-      - name: stock_historical_data
+    - name: stock_historical_data
+  
+  - name: landing_stock_src
+    database: financial_markets
+    schema: landing_stock
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    loader: stitch
+    tables:
+    - name: historical_data
+    - name: analyst_price_targets
+    - name: info_data
+    - name: info_data__company_officers
+    - name: info_data__corporate_actions
+    - name: news_data
+  
+  - name: landing_index_src
+    database: financial_markets
+    schema: landing_index
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    loader: stitch
+    tables:
+    - name: historical_data
+    - name: analyst_price_targets
+    - name: info_data
+    - name: info_data__company_officers
+    - name: info_data__corporate_actions
+    - name: news_data
+  
+  - name: landing_currency_src
+    database: financial_markets
+    schema: landing_currency
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    loader: stitch
+    tables:
+    - name: historical_data
+    - name: analyst_price_targets
+    - name: info_data
+    - name: info_data__company_officers
+    - name: info_data__corporate_actions
+    - name: news_data      
+
+  - name: landing_crypto_src
+    database: financial_markets
+    schema: landing_crypto
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    loader: stitch
+    tables:
+    - name: historical_data
+    - name: analyst_price_targets
+    - name: info_data
+    - name: info_data__company_officers
+    - name: info_data__corporate_actions
+    - name: news_data
+
+  - name: landing_commodity_src
+    database: financial_markets
+    schema: landing_commodity
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    loader: stitch
+    tables:
+    - name: historical_data
+    - name: analyst_price_targets
+    - name: info_data
+    - name: info_data__company_officers
+    - name: info_data__corporate_actions
+    - name: news_data
+
+  - name: landing_bond_src
+    database: financial_markets
+    schema: landing_bond
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    loader: stitch
+    tables:
+    - name: historical_data
+    - name: analyst_price_targets
+    - name: info_data
+    - name: info_data__company_officers
+    - name: info_data__corporate_actions
+    - name: news_data      
