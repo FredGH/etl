@@ -1,6 +1,17 @@
 {{ 
-    config(materialized='table') 
+    config
+	(
+		materialized="table", 
+		cluster_by="type",
+		tags=["fact", "indicators"],
+		labels={"contains_pii":"no", "frequency":"daily"}
+	)
 }}
+
+-- partition and cluster review on type
+-- dim date partion on year
+-- add PK and FK, check (https://docs.getdbt.com/reference/resource-properties/constraints)
+-- data_type: text (https://docs.getdbt.com/reference/resource-properties/constraints)
 
 WITH dim_date AS (
 	SELECT date_key,
@@ -10,24 +21,27 @@ WITH dim_date AS (
 			 date
 ),
 fact_indicators AS (
-	SELECT  MD5(CONCAT(name, date_key)) AS indicator_key,
-			date_key,
+	SELECT  MD5(CONCAT(shdu.name, dd.date_key)) AS indicator_key,
+			dd.date_key,
 			dd.date, --degenerated attribute 
-			name AS ticker,
-			open, 
-			high,
-			low,
-			close,
-			volume,
-			dividends,
-			stock_splits
-	FROM {{ source('financial_markets_db', 'stock_historical_data') }} AS shd
-	LEFT JOIN dim_date AS dd ON dd.date = shd.date   
+			shdu.name AS ticker,
+			CASE WHEN sad.type IS NULL THEN '{{var("not_available")}}' ELSE sad.type END AS type,
+			shdu.open, 
+			shdu.high,
+			shdu.low,
+			shdu.close,
+			shdu.volume,
+			shdu.dividends,
+			shdu.stock_splits
+	FROM  {{ ref('stg_historical_data_union') }} AS shdu
+	LEFT JOIN dim_date AS dd ON dd.date = shdu.date
+	LEFT JOIN {{ ref('stg_asset_description') }} AS sad ON shdu.name =  sad.name
 )
 SELECT indicator_key,
 		date_key,
 		date, 
 		ticker,
+		type,
 		open, 
 		high,
 		low,

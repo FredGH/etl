@@ -2,17 +2,6 @@
     config(materialized='table') 
 }}
 
-WITH  historical_data_union AS (
-	{% set relations = [
-		  source('landing_stock_src','historical_data')
-		, source('landing_index_src','historical_data')
-		, source('landing_currency_src','historical_data')
-		, source('landing_commodity_src','historical_data')
-		, source('landing_bond_src','historical_data')
-	] %}
-	{{ dbt_utils.union_relations(relations=relations) }}
-)
-
 SELECT MD5(CAST(date AS VARCHAR)) AS date_key,
 	   date, 
 	   CAST(date AS VARCHAR) AS date_as_str,
@@ -25,5 +14,5 @@ SELECT MD5(CAST(date AS VARCHAR)) AS date_key,
 	   0 AS holiday_indicator,
 	   'dummy_region' AS holiday_region
 --FROM {{ source('landing_stock_src','historical_data') }}
-FROM historical_data_union
+FROM  {{ ref('stg_historical_data_union') }}
 GROUP BY date

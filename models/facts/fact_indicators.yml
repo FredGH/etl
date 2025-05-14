@@ -12,12 +12,10 @@ models:
         description: the date key
         tests:
           - not_null
-          - unique
       - name: ticker
         description: the asset stock market ticker
         tests:
           - not_null
-          - unique
       - name: open
         description: the daily open price
       - name: high

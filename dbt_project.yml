@@ -66,6 +66,7 @@ vars:
         analysis_start_date: '1970-01-01'  # <-- Earliest time when organization started tracking data
         analysis_end_date: dbt_utils.current_timestamp()
         source_database: staging  # <-- Set as name of the raw source database where data is ingested
+        not_available: 'Not_Available'
 
 # Data seeds
 seeds:
