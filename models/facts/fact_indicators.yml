@@ -5,7 +5,7 @@ models:
      columns:
       - name: indicator_key
         description: the surrogate key
-        data_type: text
+        data_type: varchar(255)
         constraints:
           - type: not_null
           - type: primary_key
@@ -15,40 +15,89 @@ models:
           - not_null
           - unique
       - name: date_key
-        description: the date ke
+        description: the date key
+        data_type: varchar(255)
+        constraints:
+          - type: not_null
         meta:
           foreign_key: true
         tests:
           - not_null
+          - unique
       - name: ticker
         description: the asset stock market ticker
+        data_type: varchar(16)
+        constraints:
+          - type: not_null
         tests:
           - not_null
       - name: open
+        data_type: text
+        data_type: decimal(32,6)
         description: the daily open price
+        constraints:
+          - type: not_null
+          - type: check
+            expression: "{{ column_name }} >= 0"
         tests:
           - not_null
       - name: high
         description: the daily highest price
+        data_type: decimal(32,6)
+        constraints:
+          - type: not_null
+          - type: check
+            expression: "{{ column_name }} >= 0"
         tests:
           - not_null
+          - greater_than_or_equal_to_zero
       - name: low
         description: the daily highelowestst price
+        data_type: decimal(32,6)
+        constraints:
+          - type: not_null
+          - type: check
+            expression: "{{ column_name }} >= 0"
         tests:
           - not_null
+          - greater_than_or_equal_to_zero
       - name: close
         description: the daily close price
+        data_type: decimal(32,6)
+        constraints:
+          - type: not_null
+          - type: check
+            expression: "{{ column_name }} >= 0"
         tests:
           - not_null
+          - greater_than_or_equal_to_zero
       - name: volume
         description: the daily volume (i.e. quantity exchanged on the stock  market)      
+        data_type: decimal(32,6)
+        constraints:
+          - type: not_null
+          - type: check
+            expression: "{{ column_name }} >= 0"
         tests:
           - not_null
+          - greater_than_or_equal_to_zero
       - name: dividends
         description: the amount of dividends paid on the day
+        data_type: decimal(32,6)
+        constraints:
+          - type: not_null
+          - type: check
+            expression: "{{ column_name }} >= 0"
         tests:
           - not_null
+          - greater_than_or_equal_to_zero
       - name: stock_splits
         description: the stock splits on the day, it means that a company like Yahoo is dividing its existing shares into multiple new shares, effectively lowering the price per share without changing the overall market value of the company.
+        data_type: decimal(32,6)
+        constraints:
+          - type: not_null
+          - type: check
+            expression: "{{ column_name }} >= 0"
         tests:
           - not_null
+          - greater_than_or_equal_to_zero
