@@ -1,0 +1,4 @@
+version: 2
+models:
+   - name: cons_indicators
+     description: the indicators consumption layer 

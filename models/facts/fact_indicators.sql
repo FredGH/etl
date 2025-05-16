@@ -4,12 +4,31 @@
 		materialized="table", 
 		cluster_by="type",
 		tags=["fact", "indicators"],
-		labels={"contains_pii":"no", "frequency":"daily"}
+		labels={"contains_pii":"no", "frequency":"daily"},
+		post_hook=[
+			 "DO $$ BEGIN
+            	IF NOT EXISTS (SELECT 1 FROM pg_catalog.pg_constraint WHERE conname = '{{ this.name }}_pk') THEN
+                	ALTER TABLE {{ this }} ADD CONSTRAINT {{ this.name }}_pk PRIMARY KEY (indicator_key);
+            	END IF;
+        		END $$;
+				",
+			"DO $$ BEGIN
+            	IF NOT EXISTS (SELECT 1 FROM pg_catalog.pg_constraint WHERE conname = '{{ ref('dim_date') }}_pk') THEN
+                	ALTER TABLE {{ this }} ADD CONSTRAINT fk_date_key FOREIGN KEY (date_key) REFERENCES {{ ref('dim_date') }} (date_key);
+            	END IF;
+        		END $$;
+				",
+			
+    		]
 	)
 }}
 
+-- do the primary key creation with check in dim_date
+-- enfore type generation for teach col
+-- diff between meta and constraints? for PK/FK
+-- contraints on value, like vol >0
 -- partition and cluster review on type
--- dim date partion on year
+
 -- add PK and FK, check (https://docs.getdbt.com/reference/resource-properties/constraints)
 -- data_type: text (https://docs.getdbt.com/reference/resource-properties/constraints)
 

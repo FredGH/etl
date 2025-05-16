@@ -7,9 +7,7 @@ WITH  historical_data_union AS (
 		  source('landing_stock_src','historical_data')
 		, source('landing_index_src','historical_data')
 		, source('landing_currency_src','historical_data')
-
 		, source('landing_commodity_src','historical_data')
-		
 	] %}
 	{{ dbt_utils.union_relations(relations=relations) }}
 )

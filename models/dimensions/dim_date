@@ -1,6 +1,15 @@
 {{ 
-    config(materialized='table') 
+    config
+	(
+		materialized="table", 
+		tags=["dim", "date"],
+		labels={"contains_pii":"no", "frequency":"daily"},
+		post_hook=[
+        	"ALTER TABLE {{ this }} ADD CONSTRAINT {{ this.name }}_pk PRIMARY KEY (date_key);", 
+    		]
+	)
 }}
+
 
 SELECT MD5(CAST(date AS VARCHAR)) AS date_key,
 	   date, 
@@ -13,6 +22,5 @@ SELECT MD5(CAST(date AS VARCHAR)) AS date_key,
 	   CONCAT(CONCAT('Q-', TO_CHAR(date, 'Q')),'-',TO_CHAR(date, 'YYYY')) AS  calendar_quarter_year,
 	   0 AS holiday_indicator,
 	   'dummy_region' AS holiday_region
---FROM {{ source('landing_stock_src','historical_data') }}
 FROM  {{ ref('stg_historical_data_union') }}
 GROUP BY date

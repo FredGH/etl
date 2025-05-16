@@ -5,11 +5,19 @@ models:
      columns:
       - name: indicator_key
         description: the surrogate key
+        data_type: text
+        constraints:
+          - type: not_null
+          - type: primary_key
+        meta:
+          primary_key: true
         tests:
           - not_null
           - unique
       - name: date_key
-        description: the date key
+        description: the date ke
+        meta:
+          foreign_key: true
         tests:
           - not_null
       - name: ticker
@@ -18,15 +26,29 @@ models:
           - not_null
       - name: open
         description: the daily open price
+        tests:
+          - not_null
       - name: high
         description: the daily highest price
+        tests:
+          - not_null
       - name: low
         description: the daily highelowestst price
+        tests:
+          - not_null
       - name: close
         description: the daily close price
+        tests:
+          - not_null
       - name: volume
         description: the daily volume (i.e. quantity exchanged on the stock  market)      
+        tests:
+          - not_null
       - name: dividends
         description: the amount of dividends paid on the day
+        tests:
+          - not_null
       - name: stock_splits
         description: the stock splits on the day, it means that a company like Yahoo is dividing its existing shares into multiple new shares, effectively lowering the price per share without changing the overall market value of the company.
+        tests:
+          - not_null

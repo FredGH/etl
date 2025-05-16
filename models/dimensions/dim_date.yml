@@ -5,6 +5,8 @@ models:
      columns:
       - name: date
         description: the surrogate key
+        meta:
+          primary_key: true
         tests:
           - not_null
           - unique
