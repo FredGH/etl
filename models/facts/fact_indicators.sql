@@ -18,7 +18,6 @@
             	END IF;
         		END $$;
 				",
-			
     		]
 	)
 }}
@@ -26,8 +25,6 @@
 
 -- partition and cluster review on type
 
--- add PK and FK, check (https://docs.getdbt.com/reference/resource-properties/constraints)
--- data_type: text (https://docs.getdbt.com/reference/resource-properties/constraints)
 
 WITH dim_date AS (
 	SELECT  date_key

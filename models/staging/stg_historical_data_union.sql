@@ -2,7 +2,7 @@
     config(materialized='table') 
 }}
 
-WITH  historical_data_union AS (
+WITH  data_union AS (
 	{% set relations = [
 		  source('landing_stock_src','historical_data')
 		, source('landing_index_src','historical_data')
@@ -29,4 +29,4 @@ SELECT date
     , batch_id
     , _dlt_load_id
     , _dlt_id
-FROM historical_data_union
+FROM data_union
