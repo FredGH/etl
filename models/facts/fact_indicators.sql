@@ -18,6 +18,12 @@
             	END IF;
         		END $$;
 				",
+			"DO $$ BEGIN
+            	IF NOT EXISTS (SELECT 1 FROM pg_catalog.pg_constraint WHERE conname = 'dim_news_news_key_fk') THEN
+                	ALTER TABLE {{ this }} ADD CONSTRAINT  dim_news_news_key_fk FOREIGN KEY (date_key) REFERENCES {{ ref('dim_news') }} (date_key);
+            	END IF;
+        		END $$;
+				",
     		]
 	)
 }}
@@ -36,6 +42,7 @@ WITH dim_date AS (
 fact_indicators AS (
 	SELECT  MD5(CONCAT(shdu.name, dd.date_key)) AS indicator_key
 			, dd.date_key
+			, dn.news_key
 			, dd.date --degenerated attribute 
 			, shdu.name AS ticker
 			, CASE WHEN sad.type IS NULL THEN '{{var("not_available")}}' ELSE sad.type END AS type
@@ -48,6 +55,7 @@ fact_indicators AS (
 			, shdu.stock_splits
 	FROM  {{ ref('stg_historical_data_union') }} AS shdu
 	LEFT JOIN dim_date AS dd ON dd.date = shdu.date
+	LEFT JOIN {{ ref('dim_news') }} AS dn ON dn.ticker = shdu.name AND dn.pub_date = shdu.date 
 	LEFT JOIN {{ ref('stg_asset_description') }} AS sad ON shdu.name =  sad.name
 )
 SELECT 	indicator_key

@@ -20,7 +20,7 @@
 SELECT  
         DISTINCT ON (url)
           MD5(CONCAT(name, url, CAST(pub_date AS VARCHAR))) AS news_key
-        , name
+        , name as ticker
         , pub_date 
         , display_name
         , content_type

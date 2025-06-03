@@ -15,7 +15,17 @@ models:
           - not_null
           - unique
       - name: date_key
-        description: the date key
+        description: the date forec=ign key
+        data_type: varchar(255)
+        constraints:
+          - type: not_null
+        meta:
+          foreign_key: true
+        tests:
+          - not_null
+          - unique
+      - name: newsdate_key
+        description: the news foreign key
         data_type: varchar(255)
         constraints:
           - type: not_null
