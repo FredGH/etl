@@ -6,7 +6,7 @@
 		tags=["fact", "indicators"],
 		labels={"contains_pii":"no", "frequency":"daily"},
 		post_hook=[
-			 "DO $$ BEGIN
+			"DO $$ BEGIN
             	IF NOT EXISTS (SELECT 1 FROM pg_catalog.pg_constraint WHERE conname = '{{ this.name }}_pk') THEN
                 	ALTER TABLE {{ this }} ADD CONSTRAINT {{ this.name }}_pk PRIMARY KEY (indicator_key);
             	END IF;
@@ -20,7 +20,7 @@
 				",
 			"DO $$ BEGIN
             	IF NOT EXISTS (SELECT 1 FROM pg_catalog.pg_constraint WHERE conname = 'dim_news_news_key_fk') THEN
-                	ALTER TABLE {{ this }} ADD CONSTRAINT  dim_news_news_key_fk FOREIGN KEY (date_key) REFERENCES {{ ref('dim_news') }} (date_key);
+                	ALTER TABLE {{ this }} ADD CONSTRAINT dim_news_news_key_fk FOREIGN KEY (news_key) REFERENCES {{ ref('dim_news') }} (news_key);
             	END IF;
         		END $$;
 				",
@@ -31,6 +31,9 @@
 
 -- partition and cluster review on type
 
+-- TODO: review the FK business
+-- Add a column in the Bus object and regeneate the fact info
+-- Link all visually
 
 WITH dim_date AS (
 	SELECT  date_key
@@ -60,6 +63,7 @@ fact_indicators AS (
 )
 SELECT 	indicator_key
 		, date_key
+		, news_key
 		, date
 		, ticker
 		, type

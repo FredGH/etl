@@ -13,9 +13,9 @@ models:
           primary_key: true
         tests:
           - not_null
-          - unique
+          #- unique -- remove as we have multiple dates, as the granularity is at the ticker name level 
       - name: date_key
-        description: the date forec=ign key
+        description: the date foreign key
         data_type: varchar(255)
         constraints:
           - type: not_null
@@ -24,7 +24,7 @@ models:
         tests:
           - not_null
           - unique
-      - name: newsdate_key
+      - name: news_key
         description: the news foreign key
         data_type: varchar(255)
         constraints:
@@ -32,7 +32,7 @@ models:
         meta:
           foreign_key: true
         tests:
-          - not_null
+          #- not_null --remove as all dates do not necessarily bears news. (in particular historical dates)
           - unique
       - name: ticker
         description: the asset stock market ticker
@@ -60,8 +60,7 @@ models:
             expression: "{{ column_name }} >= 0"
         tests:
           - not_null
-          - greater_than_or_equal_to_zero
-      - name: low
+          - name: low
         description: the daily highelowestst price
         data_type: decimal(32,6)
         constraints:
@@ -70,7 +69,6 @@ models:
             expression: "{{ column_name }} >= 0"
         tests:
           - not_null
-          - greater_than_or_equal_to_zero
       - name: close
         description: the daily close price
         data_type: decimal(32,6)
@@ -80,7 +78,6 @@ models:
             expression: "{{ column_name }} >= 0"
         tests:
           - not_null
-          - greater_than_or_equal_to_zero
       - name: volume
         description: the daily volume (i.e. quantity exchanged on the stock  market)      
         data_type: decimal(32,6)
@@ -90,7 +87,6 @@ models:
             expression: "{{ column_name }} >= 0"
         tests:
           - not_null
-          - greater_than_or_equal_to_zero
       - name: dividends
         description: the amount of dividends paid on the day
         data_type: decimal(32,6)
@@ -100,7 +96,6 @@ models:
             expression: "{{ column_name }} >= 0"
         tests:
           - not_null
-          - greater_than_or_equal_to_zero
       - name: stock_splits
         description: the stock splits on the day, it means that a company like Yahoo is dividing its existing shares into multiple new shares, effectively lowering the price per share without changing the overall market value of the company.
         data_type: decimal(32,6)
@@ -110,4 +105,3 @@ models:
             expression: "{{ column_name }} >= 0"
         tests:
           - not_null
-          - greater_than_or_equal_to_zero
