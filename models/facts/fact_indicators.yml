@@ -23,7 +23,6 @@ models:
           foreign_key: true
         tests:
           - not_null
-          - unique
       - name: news_key
         description: the news foreign key
         data_type: varchar(255)

@@ -24,4 +24,4 @@ SELECT  shd.indicator_key,
 		shd.dividends,
 		shd.stock_splits
 FROM  {{ ref('fact_indicators') }} AS shd
-LEFT JOIN  {{ ref('dim_date') }} AS dd ON dd.date_key = shd.date_key   
+LEFT JOIN  {{ ref('dim_dates') }} AS dd ON dd.date_key = shd.date_key   

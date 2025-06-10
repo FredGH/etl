@@ -1,6 +1,6 @@
 version: 2
 models:
-   - name: dim_date
+   - name: dim_dates
      description: the date dimension
      columns:
       - name: date_key

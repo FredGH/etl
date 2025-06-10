@@ -13,8 +13,8 @@
         		END $$;
 				",
 			"DO $$ BEGIN
-            	IF NOT EXISTS (SELECT 1 FROM pg_catalog.pg_constraint WHERE conname = 'dim_date_date_key_fk') THEN
-                	ALTER TABLE {{ this }} ADD CONSTRAINT  dim_date_date_key_fk FOREIGN KEY (date_key) REFERENCES {{ ref('dim_date') }} (date_key);
+            	IF NOT EXISTS (SELECT 1 FROM pg_catalog.pg_constraint WHERE conname = 'dim_dates_date_key_fk') THEN
+                	ALTER TABLE {{ this }} ADD CONSTRAINT  dim_dates_date_key_fk FOREIGN KEY (date_key) REFERENCES {{ ref('dim_dates') }} (date_key);
             	END IF;
         		END $$;
 				",
@@ -31,14 +31,11 @@
 
 -- partition and cluster review on type
 
--- TODO: review the FK business
--- Add a column in the Bus object and regeneate the fact info
--- Link all visually
 
-WITH dim_date AS (
+WITH dim_dates AS (
 	SELECT  date_key
 		   , date
-	FROM {{ ref('dim_date') }}
+	FROM {{ ref('dim_dates') }}
 	GROUP BY   date_key 
 			 , date
 ),
@@ -46,7 +43,7 @@ fact_indicators AS (
 	SELECT  MD5(CONCAT(shdu.name, dd.date_key)) AS indicator_key
 			, dd.date_key
 			, dn.news_key
-			, dd.date --degenerated attribute 
+			, CAST(dd.date AS DATE) AS date --degenerated attribute 
 			, shdu.name AS ticker
 			, CASE WHEN sad.type IS NULL THEN '{{var("not_available")}}' ELSE sad.type END AS type
 			, shdu.open
@@ -57,7 +54,7 @@ fact_indicators AS (
 			, shdu.dividends
 			, shdu.stock_splits
 	FROM  {{ ref('stg_historical_data_union') }} AS shdu
-	LEFT JOIN dim_date AS dd ON dd.date = shdu.date
+	LEFT JOIN dim_dates AS dd ON dd.date = shdu.date
 	LEFT JOIN {{ ref('dim_news') }} AS dn ON dn.ticker = shdu.name AND dn.pub_date = shdu.date 
 	LEFT JOIN {{ ref('stg_asset_description') }} AS sad ON shdu.name =  sad.name
 )

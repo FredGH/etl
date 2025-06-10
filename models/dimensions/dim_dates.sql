@@ -2,13 +2,13 @@
     config
 	(
 		materialized="table", 
-		tags=["dim", "date"],
+		tags=["dim", "dates"],
 		labels={"contains_pii":"no", "frequency":"daily"},
 		partition_by={"field":"date", "data_type":"date", "granurity":"day_of_week"},
 		cluster=["calendar_year", "calendar_month"],
 		post_hook=[
 				"DO $$ BEGIN
-            	IF NOT EXISTS (SELECT 1 FROM pg_catalog.pg_constraint WHERE conname = '{{ this.name }}_pk_new') THEN
+            	IF NOT EXISTS (SELECT 1 FROM pg_catalog.pg_constraint WHERE conname = '{{ this.name }}_pk') THEN
                 	ALTER TABLE {{ this }} ADD CONSTRAINT {{ this.name }}_pk_new PRIMARY KEY (date_key);
             	END IF;
         		END $$;

@@ -15,7 +15,7 @@ WITH  data_union AS (
 --, source('landing_bond_src','historical_data')
 --, source('landing_crypto_src','historical_data')
 
-SELECT date
+SELECT CAST(date AS DATE) AS date 
     , open
     , high
     , low
